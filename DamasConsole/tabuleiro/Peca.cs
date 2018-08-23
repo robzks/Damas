@@ -5,9 +5,10 @@
         public int qteDeJogadas { get; set; }
         public Tabuleiro tab { get; set; }
 
-        public Peca(Posicao posicao, Tabuleiro tab, Cor cor) {
-            this.posicao = posicao;
+        public Peca(Tabuleiro tab, Cor cor) {
+            this.posicao = null;
             this.tab = tab;
+            this.cor = cor;
             qteDeJogadas = 0;
 
         }

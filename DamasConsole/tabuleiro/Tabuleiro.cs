@@ -17,6 +17,11 @@ using System.Threading.Tasks;
 
         }
 
+        public void colocarPeca(Peca peca, Posicao pos) {
+            pecas[pos.linha, pos.coluna] = peca;
+            peca.posicao = pos;
+        }
+
         public Peca peca(int linha, int coluna) {
             return pecas[linha, coluna];
         }
