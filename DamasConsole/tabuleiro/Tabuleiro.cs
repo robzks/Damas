@@ -48,6 +48,11 @@ using System.Threading.Tasks;
             return pecas[linha, coluna];
         }
 
+        public void moverPeca(Posicao posOrigem, Posicao posDes) {
+          
+            pecas[posOrigem.linha, posOrigem.coluna].posicao = posDes; 
+        }
+
         private bool temPeca(Posicao pos) {
             if (pecas[pos.linha, pos.coluna] != null ) {
                 return true;
