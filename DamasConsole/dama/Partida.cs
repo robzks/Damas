@@ -24,7 +24,7 @@ namespace dama {
 
         public void executaMovimento(Posicao origem, Posicao destino) {
          Peca peca=  tab.retirarPeca(origem);
-           // peca.incrementarQteDeMovimentos();
+            peca.incrementarQteDeMovimentos();
            // Peca pecaCapturada = tab.retirarPeca(destino);
             tab.colocarPeca(peca, destino);
         }

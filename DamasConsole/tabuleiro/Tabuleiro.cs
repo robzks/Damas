@@ -41,7 +41,7 @@ using System.Threading.Tasks;
                 throw new TabuleiroException("Não tem peca na posicao " + pos);
             }
             Peca aux = pecas[pos.linha, pos.coluna];
-            aux = null;
+            
             pecas[pos.linha, pos.coluna] = null;
             return aux;
         }
