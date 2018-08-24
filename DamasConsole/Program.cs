@@ -10,7 +10,12 @@ namespace DamasConsole {
                 Tabuleiro tab = new Tabuleiro(8, 8);
                 tab.colocarPeca(new PecaNormal(tab, Cor.Branco), new Posicao(0, 0));
                 tab.colocarPeca(new PecaNormal(tab, Cor.Branco), new Posicao(0, 1));
-                tab.colocarPeca(new Dama(tab, Cor.Branco), new Posicao(7, 7));
+                tab.colocarPeca(new Dama(tab, Cor.Branco), new Posicao(7, 6));
+                Tela.imprimirTabuleiro(tab);
+                Console.ReadLine();
+                Console.Clear();
+                
+                tab.retirarPeca(new Dama(tab, Cor.Branco), new Posicao(7, 7));
                 Tela.imprimirTabuleiro(tab);
             }
             catch (TabuleiroException e) {
