@@ -19,23 +19,26 @@ using System.Threading.Tasks;
         }
 
         public void colocarPeca(Peca peca, Posicao pos) {
+            tamanhoCerto(pos);
+
             if (temPeca(pos)) {
                 throw new TabuleiroException("Já tem peça adicionada na posição: " + pos);
             }
-            if (pos.linha < 0  || pos.linha >= linhas || pos.coluna <0 || pos.coluna >= colunas) {
-                throw new TabuleiroException("Numero de linha ou coluna execede o tamanho do tabuleiro.");
-            }
-            else {
-                pecas[pos.linha, pos.coluna] = peca;
-                peca.posicao = pos;
-            }
+          
+            pecas[pos.linha, pos.coluna] = peca;
+            peca.posicao = pos;
+            
            
         }
 
         public void retirarPeca(Peca peca, Posicao pos){
+            tamanhoCerto(pos);
+
             if (!temPeca(pos)) {
                 throw new TabuleiroException("Não tem peca na posicao " + pos);
             }
+          
+
             pecas[pos.linha, pos.coluna] = null;
             peca = null;
         }
@@ -50,6 +53,13 @@ using System.Threading.Tasks;
                 return true;
             }
             return false;
+        }
+
+        private bool tamanhoCerto(Posicao pos) {
+            if (pos.linha < 0 || pos.linha >= linhas || pos.coluna < 0 || pos.coluna >= colunas) {
+                throw new TabuleiroException("Numero de linha ou coluna execede o tamanho do tabuleiro.");
+            }
+            return true;
         }
 
     }
