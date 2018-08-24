@@ -12,6 +12,10 @@
             qteDeJogadas = 0;
 
         }
+
+        public void incrementarQteDeMovimentos() {
+            qteDeJogadas++;
+        }
     }
 
     

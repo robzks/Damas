@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="dama\Dama.cs" />
+    <Compile Include="dama\Partida.cs" />
     <Compile Include="dama\PecaNormal.cs" />
     <Compile Include="dama\PosicaoDama.cs" />
     <Compile Include="Program.cs" />

@@ -24,23 +24,26 @@ using System.Threading.Tasks;
             if (temPeca(pos)) {
                 throw new TabuleiroException("Já tem peça adicionada na posição: " + pos);
             }
+
           
             pecas[pos.linha, pos.coluna] = peca;
+
+
             peca.posicao = pos;
             
            
         }
 
-        public void retirarPeca(Peca peca, Posicao pos){
+        public Peca retirarPeca(Posicao pos){
             tamanhoCerto(pos);
 
             if (!temPeca(pos)) {
                 throw new TabuleiroException("Não tem peca na posicao " + pos);
             }
-          
-
+            Peca aux = pecas[pos.linha, pos.coluna];
+            aux = null;
             pecas[pos.linha, pos.coluna] = null;
-            peca = null;
+            return aux;
         }
         
 

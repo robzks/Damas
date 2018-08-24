@@ -1,4 +1,5 @@
-﻿using System;
+﻿using dama;
+using System;
 using tabuleiro;
 
 namespace DamasConsole {
@@ -33,6 +34,18 @@ namespace DamasConsole {
             else {
                 Console.Write(peca);
             }
+
+            
+        }
+
+        public static PosicaoDama lerPosicaoDama() {
+           
+            var origem = Console.ReadLine();
+            char oColuna = origem[0];
+            int oLinha = int.Parse (origem[1]+ "");
+          
+
+            return new PosicaoDama(oColuna, oLinha);
         }
     }
 }
