@@ -14,6 +14,11 @@ namespace DamasConsole {
                 Console.WriteLine();
                 Console.Write("Origem: ");
                 Posicao pOrigem =   Tela.lerPosicaoDama().toPosicao();
+
+                Console.Clear();
+                bool[,] movimentosPossiveis = p.tab.peca(pOrigem).movimentosPossiveis();
+                Tela.imprimirTabuleiro(p.tab,movimentosPossiveis);
+
                 Console.Write("Destino: ");
                 Posicao pDestino = Tela.lerPosicaoDama().toPosicao();
 

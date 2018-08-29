@@ -1,5 +1,6 @@
 ﻿namespace tabuleiro {
-    public class Peca {
+
+    public abstract class Peca {
         public Cor cor { get; private set; }
         public Posicao posicao { get; set; }
         public int qteDeJogadas { get; set; }
@@ -12,6 +13,8 @@
             qteDeJogadas = 0;
 
         }
+
+        public abstract bool[,] movimentosPossiveis();
 
         public void incrementarQteDeMovimentos() {
             qteDeJogadas++;

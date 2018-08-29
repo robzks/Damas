@@ -25,8 +25,15 @@ namespace dama {
         public void executaMovimento(Posicao origem, Posicao destino) {
          Peca peca=  tab.retirarPeca(origem);
             peca.incrementarQteDeMovimentos();
-           // Peca pecaCapturada = tab.retirarPeca(destino);
-            tab.colocarPeca(peca, destino);
+            // Peca pecaCapturada = tab.retirarPeca(destino);
+            try {
+                tab.colocarPeca(peca, destino);
+            }
+            catch (TabuleiroException e) {
+
+                Console.WriteLine(e.Message);
+            }
+
         }
 
         private void colocarPecas() {
@@ -43,7 +50,7 @@ namespace dama {
                 tab.colocarPeca(new PecaNormal(tab, Cor.Preto), new PosicaoDama('c', 1).toPosicao());
                 tab.colocarPeca(new PecaNormal(tab, Cor.Preto), new PosicaoDama('e', 1).toPosicao());
                 tab.colocarPeca(new PecaNormal(tab, Cor.Preto), new PosicaoDama('g', 1).toPosicao());
-              
+                tab.colocarPeca(new Dama(tab, Cor.Preto), new PosicaoDama('e', 4).toPosicao());
                 //tab.moverPeca(origem, destino);
                 //Tela.imprimirTabuleiro(tab);
             }

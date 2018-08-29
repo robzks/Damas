@@ -51,6 +51,11 @@ using System.Threading.Tasks;
             return pecas[linha, coluna];
         }
 
+        public Peca peca(Posicao pos) {
+            return pecas[pos.linha,pos.coluna];
+        }
+
+
         public void moverPeca(Posicao posOrigem, Posicao posDes) {
           
             pecas[posOrigem.linha, posOrigem.coluna].posicao = posDes; 
@@ -63,7 +68,13 @@ using System.Threading.Tasks;
             return false;
         }
 
-        private bool tamanhoCerto(Posicao pos) {
+        public bool verificarLimite(Posicao pos) {
+            if (pos.linha < 0 || pos.linha >= linhas || pos.coluna < 0 || pos.coluna >= colunas) {
+                return false;
+                    }
+         return true;
+            }
+        public bool tamanhoCerto(Posicao pos) {
             if (pos.linha < 0 || pos.linha >= linhas || pos.coluna < 0 || pos.coluna >= colunas) {
                 throw new TabuleiroException("Numero de linha ou coluna execede o tamanho do tabuleiro.");
             }
