@@ -1,5 +1,6 @@
 ﻿using dama;
 using System;
+using System.Collections.Generic;
 using tabuleiro;
 
 namespace DamasConsole {
@@ -19,6 +20,35 @@ namespace DamasConsole {
             }
             Console.WriteLine("  A  B  C  D  E  F  G  H");
             Console.WriteLine();
+        }
+
+        internal static void imprimirPartida(Partida partida) {
+            imprimirTabuleiro(partida.tab);
+            imprimirPecasCapturas(partida);
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine("Turno:" + partida.turno);
+            Console.WriteLine("Aguardando jogada: " + partida.jogadorAtual);
+        }
+
+        private static void imprimirPecasCapturas(Partida partida) {
+            Console.WriteLine("Peças capturas:");
+            Console.WriteLine();
+            Console.Write("Brancas:");
+            imprimirConjunto(partida.pecasCapturadas(Cor.Branco));
+            Console.WriteLine();
+            Console.Write("Pretas:");
+            imprimirConjunto(partida.pecasCapturadas(Cor.Preto));
+
+
+        }
+
+        private static void imprimirConjunto(HashSet<Peca> conjunto) {
+            Console.Write("[ ");
+            foreach (var item in conjunto) {
+                Console.Write(item + " ");
+            }
+            Console.Write(" ]");
         }
 
         public static void imprimirTabuleiro(Tabuleiro tab, bool[,] posicoesPosiveis) {

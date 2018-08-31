@@ -13,6 +13,9 @@ namespace dama {
         public int turno { get; private set; }
         public Cor jogadorAtual { get; private set; }
         public bool terminada { get; private set; }
+        private HashSet<Peca> pecas = new HashSet<Peca>();
+        private HashSet<Peca> capturadas = new HashSet<Peca>();
+
 
         public Partida() {
             terminada = false;
@@ -25,13 +28,16 @@ namespace dama {
         public void executaMovimento(Posicao origem, Posicao destino) {
          Peca peca=  tab.retirarPeca(origem);
             peca.incrementarQteDeMovimentos();
-            // Peca pecaCapturada = tab.retirarPeca(destino);
+            Peca pecaCapturada = tab.retirarPeca(destino);
             try {
                 tab.colocarPeca(peca, destino);
             }
             catch (TabuleiroException e) {
 
                 Console.WriteLine(e.Message);
+            }
+            if (pecaCapturada != null) {
+                capturadas.Add(pecaCapturada);
             }
 
         }
@@ -70,21 +76,65 @@ namespace dama {
             }
         }
 
+        public HashSet<Peca> pecasCapturadas(Cor cor) {
+            HashSet<Peca> aux = new HashSet<Peca>();
+            foreach (Peca item in capturadas) {
+                if (item.cor == cor) {
+                    aux.Add(item);
+                }
+            }
+            return aux;
+        }
+
+        public HashSet<Peca> pecasEmJogo(Cor cor) {
+            HashSet<Peca> aux = new HashSet<Peca>();
+            foreach (Peca item in pecas) {
+                if (item.cor == cor) {
+                    aux.Add(item);
+                }
+            }
+            aux.ExceptWith(pecasCapturadas(cor));
+            return aux;
+        }
+
+        private void colocarNovasPecas(char coluna, int linha, Peca peca) {
+            tab.colocarPeca(peca, new PosicaoDama(coluna, linha).toPosicao());
+            pecas.Add(peca);
+        }
+
         private void colocarPecas() {
 
 
             try {
-               
-                tab.colocarPeca(new PecaNormal(tab, Cor.Branco), new PosicaoDama('b', 8).toPosicao());
-                tab.colocarPeca(new PecaNormal(tab, Cor.Branco), new PosicaoDama('d', 8).toPosicao());
-                tab.colocarPeca(new PecaNormal(tab, Cor.Branco), new PosicaoDama('f', 8).toPosicao());
-                tab.colocarPeca(new PecaNormal(tab, Cor.Branco), new PosicaoDama('h', 8).toPosicao());
 
-                tab.colocarPeca(new PecaNormal(tab, Cor.Preto), new PosicaoDama('a', 1).toPosicao());
-                tab.colocarPeca(new PecaNormal(tab, Cor.Preto), new PosicaoDama('c', 1).toPosicao());
-                tab.colocarPeca(new PecaNormal(tab, Cor.Preto), new PosicaoDama('e', 1).toPosicao());
-                tab.colocarPeca(new PecaNormal(tab, Cor.Preto), new PosicaoDama('g', 1).toPosicao());
-                tab.colocarPeca(new Dama(tab, Cor.Preto), new PosicaoDama('e', 4).toPosicao());
+
+                colocarNovasPecas('b', 8, new PecaNormal(tab, Cor.Branco));
+                colocarNovasPecas('d', 8, new PecaNormal(tab, Cor.Branco));
+                colocarNovasPecas('f', 8, new PecaNormal(tab, Cor.Branco));
+                colocarNovasPecas('h', 8, new PecaNormal(tab, Cor.Branco));
+                colocarNovasPecas('a', 7, new PecaNormal(tab, Cor.Branco));
+                colocarNovasPecas('c', 7, new PecaNormal(tab, Cor.Branco));
+                colocarNovasPecas('e', 7, new PecaNormal(tab, Cor.Branco));
+                colocarNovasPecas('g', 7, new PecaNormal(tab, Cor.Branco));
+                colocarNovasPecas('b', 6, new PecaNormal(tab, Cor.Branco));
+                colocarNovasPecas('d', 6, new PecaNormal(tab, Cor.Branco));
+                colocarNovasPecas('f', 6, new PecaNormal(tab, Cor.Branco));
+                colocarNovasPecas('h', 6, new PecaNormal(tab, Cor.Branco));
+
+                colocarNovasPecas('a', 1, new PecaNormal(tab, Cor.Preto));
+                colocarNovasPecas('c', 1, new PecaNormal(tab, Cor.Preto));
+                colocarNovasPecas('e', 1, new PecaNormal(tab, Cor.Preto));
+                colocarNovasPecas('g', 1, new PecaNormal(tab, Cor.Preto));
+                colocarNovasPecas('b', 2, new PecaNormal(tab, Cor.Preto));
+                colocarNovasPecas('d', 2, new PecaNormal(tab, Cor.Preto));
+                colocarNovasPecas('f', 2, new PecaNormal(tab, Cor.Preto));
+                colocarNovasPecas('h', 2, new PecaNormal(tab, Cor.Preto));
+                colocarNovasPecas('a', 3, new PecaNormal(tab, Cor.Preto));
+                colocarNovasPecas('c', 3, new PecaNormal(tab, Cor.Preto));
+                colocarNovasPecas('e', 3, new PecaNormal(tab, Cor.Preto));
+                colocarNovasPecas('g', 3, new PecaNormal(tab, Cor.Preto));
+
+
                 //tab.moverPeca(origem, destino);
                 //Tela.imprimirTabuleiro(tab);
             }

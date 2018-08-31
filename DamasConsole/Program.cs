@@ -13,10 +13,9 @@ namespace DamasConsole {
                 try {
 
                     Console.Clear();
-                Tela.imprimirTabuleiro(p.tab);
-                Console.WriteLine();
-                Console.WriteLine("Turno:" + p.turno);
-                Console.WriteLine("Aguardando jogada: "+ p.jogadorAtual);
+
+
+                    Tela.imprimirPartida(p);
                 Console.Write("Origem: ");
                 Posicao pOrigem =   Tela.lerPosicaoDama().toPosicao();
                 p.validarPosicaoDeOrigem(pOrigem);

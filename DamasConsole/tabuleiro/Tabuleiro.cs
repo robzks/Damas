@@ -37,9 +37,9 @@ using System.Threading.Tasks;
         public Peca retirarPeca(Posicao pos){
             tamanhoCerto(pos);
 
-            if (!temPeca(pos)) {
-                throw new TabuleiroException("Não tem peca na posicao " + pos);
-            }
+            //if (!temPeca(pos)) {
+            //    throw new TabuleiroException("Não tem peca na posicao " + pos);
+            //}
             Peca aux = pecas[pos.linha, pos.coluna];
             
             pecas[pos.linha, pos.coluna] = null;
