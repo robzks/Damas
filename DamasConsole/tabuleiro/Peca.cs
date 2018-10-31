@@ -1,4 +1,6 @@
-﻿namespace tabuleiro {
+﻿using System;
+
+namespace tabuleiro {
 
     public abstract class Peca {
         public Cor cor { get; private set; }
@@ -18,21 +20,45 @@
             return movimentosPossiveis()[pos.linha, pos.coluna];
         }
 
-        public abstract bool[,] movimentosPossiveis();
-
         public bool existeMovimentosPossiveis() {
             bool[,] mat = movimentosPossiveis();
             for (int i = 0; i < tab.linhas; i++) {
                 for (int j = 0; j < tab.colunas; j++) {
-                    if (mat[i,j]) {
+                    if (mat[i, j]) {
                         return true;
                     }
                 }
             }
             return false;
         }
+
+        public abstract bool[,] movimentosPossiveis();
+
+
+        public abstract bool[,] CapturasPossiveis();
+
+        public bool temPecasACapturar() {
+            bool temPeca = false;
+                var mat = CapturasPossiveis();
+            for (int i = 0; i < tab.linhas; i++) {
+                for (int j = 0; j < tab.colunas; j++) {
+                    if (mat[i, j] ) {
+                        return true;
+                    }
+                   
+                }
+            }
+            return temPeca;
+
+        }
+
+
         public void incrementarQteDeMovimentos() {
             qteDeJogadas++;
+        }
+
+        internal bool podeMoverParaDepoisDeCapturar(Posicao posicao) {
+            return CapturasPossiveis()[posicao.linha, posicao.coluna];
         }
     }
 

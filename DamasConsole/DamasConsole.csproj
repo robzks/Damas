@@ -48,7 +48,9 @@
     <Compile Include="dama\PosicaoDama.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="tabuleiro\Coordenada.cs" />
     <Compile Include="tabuleiro\Cor.cs" />
+    <Compile Include="tabuleiro\Direcao.cs" />
     <Compile Include="tabuleiro\Excessao\TabuleiroException.cs" />
     <Compile Include="tabuleiro\Peca.cs" />
     <Compile Include="tabuleiro\Posicao.cs" />

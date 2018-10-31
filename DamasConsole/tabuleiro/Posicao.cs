@@ -10,9 +10,12 @@ namespace tabuleiro {
             this.coluna = coluna;
         }
 
-        public void definirPosicao(int linha, int coluna) {
-            this.linha = linha;
-            this.coluna = coluna;
+        public Posicao() {
+
+        }
+        public void definirPosicao(Posicao pos) {
+            this.linha = pos.linha;
+            this.coluna = pos.coluna;
         }
 
         public override string ToString() {

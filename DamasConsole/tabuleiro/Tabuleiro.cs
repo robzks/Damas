@@ -9,7 +9,7 @@ using System.Threading.Tasks;
     public class Tabuleiro {
         public int linhas { get; set; }
         public int colunas { get; set; }
-        private Peca[,] pecas;
+        private Peca[,] pecas ;
 
         public Tabuleiro(int linhas, int colunas) {
             this.linhas = linhas;
@@ -45,13 +45,35 @@ using System.Threading.Tasks;
             pecas[pos.linha, pos.coluna] = null;
             return aux;
         }
-        
+
+        public Peca capturarPeca(Posicao origem, Posicao destino) {
+            Posicao aux = new Posicao(0, 0);
+            if (origem.linha< destino.linha ) {
+                aux.linha = origem.linha + 1;
+            }
+            else if (origem.linha > destino.linha) {
+                aux.linha = origem.linha - 1;
+            }
+
+            if (origem.coluna < destino.coluna) {
+                aux.coluna = origem.coluna + 1;
+            }
+            else if (origem.coluna > destino.coluna) {
+                aux.coluna = origem.coluna - 1;
+            }
+
+            Peca peca = pecas[aux.linha, aux.coluna];
+            retirarPeca(aux);
+            return peca;
+
+        }
 
         public Peca peca(int linha, int coluna) {
             return pecas[linha, coluna];
         }
 
         public Peca peca(Posicao pos) {
+
             return pecas[pos.linha,pos.coluna];
         }
 
@@ -71,13 +93,64 @@ using System.Threading.Tasks;
 
 
         public bool verificarLimite(Posicao pos) {
-            if (pos.linha < 0 || pos.linha >= linhas || pos.coluna < 0 || pos.coluna >= colunas) {
-                return false;
+            if (estaNoEntreLimiteLinha(pos)  && estaNoEntreLimiteColuna(pos)) {
+                return true;
                     }
-         return true;
+         return false;
             }
+
+        private bool estaNoEntreLimiteLinha(Posicao pos) {
+
+            if(pos.linha >= 0 && pos.linha < linhas) {
+                return true;
+            }
+            return false;
+        }
+
+        private bool estaNoEntreLimiteColuna(Posicao pos) {
+
+            if (pos.coluna >= 0 && pos.coluna < colunas) {
+                return true;
+            }
+            return false;
+        }
+
+        internal bool essaPecaTemCaptura(Posicao posicao) {
+          var p=   pecas[posicao.linha, posicao.coluna].CapturasPossiveis();
+            foreach (var item in p) {
+                if (item) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        internal Cor queCorEhEssaPeca(Posicao posicao) {
+            Cor cor  = Cor.Branco;
+            foreach (var peca in pecas) {
+               
+                cor= peca.cor;
+            }
+            return cor;
+        }
+
+        public bool temPecasACapturar(Cor pecaAtual) {
+
+           
+            foreach (var p in pecas) {
+                if (p != null && p.cor == pecaAtual) {
+                    if (p.temPecasACapturar()) {
+                        return true;
+                    }
+                    
+                }
+               
+            }
+            return false;
+        }
+
         public bool tamanhoCerto(Posicao pos) {
-            if (pos.linha < 0 || pos.linha >= linhas || pos.coluna < 0 || pos.coluna >= colunas) {
+            if (!verificarLimite(pos)) {
                 throw new TabuleiroException("Numero de linha ou coluna execede o tamanho do tabuleiro.");
             }
             return true;

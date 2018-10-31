@@ -13,12 +13,16 @@ namespace dama {
         public int turno { get; private set; }
         public Cor jogadorAtual { get; private set; }
         public bool terminada { get; private set; }
+        public bool temCaptura { get; set; }
+        public bool jogadaCaptura { get; set; }
         private HashSet<Peca> pecas = new HashSet<Peca>();
         private HashSet<Peca> capturadas = new HashSet<Peca>();
 
 
         public Partida() {
+            temCaptura = false;
             terminada = false;
+            jogadaCaptura = false;
             tab = new Tabuleiro(8, 8);
             turno = 1;
             jogadorAtual = Cor.Branco;
@@ -26,9 +30,11 @@ namespace dama {
         }
 
         public void executaMovimento(Posicao origem, Posicao destino) {
-         Peca peca=  tab.retirarPeca(origem);
+
+            Peca peca=  tab.retirarPeca(origem);
             peca.incrementarQteDeMovimentos();
-            Peca pecaCapturada = tab.retirarPeca(destino);
+            Peca pecaCapturada = tab.capturarPeca(origem, destino);
+            
             try {
                 tab.colocarPeca(peca, destino);
             }
@@ -38,9 +44,24 @@ namespace dama {
             }
             if (pecaCapturada != null) {
                 capturadas.Add(pecaCapturada);
+                jogadaCaptura = true;
             }
 
         }
+
+        //public bool[,] verificarPossiveisCapturas() {
+        //    bool[,] aux = new bool[tab.linhas, tab.colunas];
+        //    foreach (var item in pecas) {
+                
+                     
+
+        //    }
+
+        //}
+        //public bool temLanceObrigatorio() {
+        //    return false;
+        //}
+
         public void validarPosicaoDeOrigem(Posicao origem) {
             if (tab.peca(origem)== null) {
                 throw new TabuleiroException("Não existe peça na posição de origem");
@@ -50,30 +71,57 @@ namespace dama {
 
             }
 
-            if (!tab.peca(origem).existeMovimentosPossiveis()) {
-                throw new TabuleiroException("Não existe movimentos possíveis para esta peça");
+            if (essaCorTemCaptura()) {
+                if (!essaPecaTemCaptura(origem)) {
+                    throw new TabuleiroException("Existem capturar obrigatorias.");
+                }
+
             }
+
+            //if (!tab.peca(origem).existeMovimentosPossiveis()) {
+            //    throw new TabuleiroException("Não existe movimentos possíveis para esta peça");
+            //}
         }
 
         public void validarPosicaoDeDestino(Posicao origem, Posicao destino) {
-            if (!tab.peca(origem).podeMoverPara(destino)) {
+            if (!tab.peca(origem).podeMoverPara(destino) && !tab.peca(origem).podeMoverParaDepoisDeCapturar(destino)) {
                 throw new TabuleiroException("Posição de destino inválida!");
             }
         }
-        public void realizaJogada(Posicao origem, Posicao destino) {
-            executaMovimento(origem, destino);
+    public void realizaJogada(Posicao origem, Posicao destino) {
+           
+                executaMovimento(origem, destino);
+                        
             turno++;
             mudaJogador();
+          
+        }
+
+        public bool essaPecaTemCaptura(Posicao origem) {
+            return tab.essaPecaTemCaptura(origem);
+        }
+
+        public bool essaCorTemCaptura() {
+            if (tab.temPecasACapturar(jogadorAtual)) {
+                return true;
+            }
+            return false;
         }
 
         private void mudaJogador() {
-            if (jogadorAtual == Cor.Branco) {
-                jogadorAtual = Cor.Preto;
+            temCaptura = essaCorTemCaptura();
+            if (!temCaptura && !jogadaCaptura) {
+                if (jogadorAtual == Cor.Branco) {
+                    jogadorAtual = Cor.Preto;
 
+                }
+                else {
+                    jogadorAtual = Cor.Branco;
+                }
+               
             }
-            else {
-                jogadorAtual = Cor.Branco;
-            }
+            jogadaCaptura = false;
+
         }
 
         public HashSet<Peca> pecasCapturadas(Cor cor) {
@@ -125,13 +173,13 @@ namespace dama {
                 colocarNovasPecas('c', 1, new PecaNormal(tab, Cor.Preto));
                 colocarNovasPecas('e', 1, new PecaNormal(tab, Cor.Preto));
                 colocarNovasPecas('g', 1, new PecaNormal(tab, Cor.Preto));
-                colocarNovasPecas('b', 2, new PecaNormal(tab, Cor.Preto));
-                colocarNovasPecas('d', 2, new PecaNormal(tab, Cor.Preto));
-                colocarNovasPecas('f', 2, new PecaNormal(tab, Cor.Preto));
-                colocarNovasPecas('h', 2, new PecaNormal(tab, Cor.Preto));
+                //colocarNovasPecas('b', 2, new PecaNormal(tab, Cor.Preto));
+                //colocarNovasPecas('d', 2, new PecaNormal(tab, Cor.Preto));
+                //colocarNovasPecas('f', 2, new PecaNormal(tab, Cor.Preto));
+                //colocarNovasPecas('h', 2, new PecaNormal(tab, Cor.Preto));
                 colocarNovasPecas('a', 3, new PecaNormal(tab, Cor.Preto));
                 colocarNovasPecas('c', 3, new PecaNormal(tab, Cor.Preto));
-                colocarNovasPecas('e', 3, new PecaNormal(tab, Cor.Preto));
+                colocarNovasPecas('e', 5, new PecaNormal(tab, Cor.Preto));
                 colocarNovasPecas('g', 3, new PecaNormal(tab, Cor.Preto));
 
 

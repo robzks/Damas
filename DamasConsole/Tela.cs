@@ -97,11 +97,14 @@ namespace DamasConsole {
         public static PosicaoDama lerPosicaoDama() {
            
             var origem = Console.ReadLine();
-            char oColuna = origem[0];
+            string linhaInteria = origem;
+            string linhaMinuscula = linhaInteria.ToLower();
+            char coluna = linhaMinuscula[0];
             int oLinha = int.Parse (origem[1]+ "");
+
           
 
-            return new PosicaoDama(oColuna, oLinha);
+            return new PosicaoDama(coluna, oLinha);
         }
     }
 }
